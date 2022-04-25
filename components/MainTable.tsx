@@ -62,6 +62,7 @@ export const DateCell = (props: AnyProps) => {
     <Cell {...props} style={{ padding: padding }}>
       {editing ? (
         <DatePicker
+          oneTap
           defaultValue={
             rowData[dataKey] ? new Date(Date.parse(rowData[dataKey])) : null
           }
