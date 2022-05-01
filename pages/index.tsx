@@ -1,17 +1,17 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
-import { Button, List } from "rsuite";
 import Body from "../components/Body";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import MainTable, { DataRow, RATES } from "../components/MainTable";
+import MainTable, { DataRow, RATES } from "../components/tables/MainTable";
 import Navbar from "../components/Navbar";
 import TextSection from "../components/TextSection";
 import TextSectionContainer from "../components/TextSectionContainer";
 import styles from "../styles/Home.module.css";
 
 import { SECTIONS } from "../utils/texts";
+import Button from "../components/Button";
 
 const MinimumIncome = 167400;
 const MinimumIncome10pc = MinimumIncome * 0.1;
@@ -26,8 +26,23 @@ interface TaxResults {
   currentYearTax: number;
 }
 
+const mainTableStyle = {
+  width: "85%",
+  alignSelf: "center",
+  display: "flex",
+  flexFlow: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "20px",
+  marginBottom: "50px",
+};
+
+const defaultData: DataRow[] = [
+  {id:  1}, {id: 2}, {id: 3}, {id: 4},
+];
+
 const Home: NextPage = () => {
-  const [data, setData] = useState<DataRow[]>([]);
+  const [data, setData] = useState<DataRow[]>(defaultData);
   const [taxResults, setTaxResults] = useState<TaxResults | null>(null);
 
   const handleChange = (id: number, key: string, value: any) => {
@@ -81,15 +96,6 @@ const Home: NextPage = () => {
     setData(nextData);
   };
 
-  const handleToggleState = (id: number) => {
-    const nextData = [...data];
-    const activeItem = nextData.find((item) => item.id === id);
-    if (activeItem) {
-      activeItem.status = activeItem.status ? null : "EDIT";
-    }
-    setData(nextData);
-  };
-
   const handleDeleteRow = (id: number) => {
     const nextData = data.filter((item) => item.id !== id);
     setData(nextData);
@@ -110,33 +116,25 @@ const Home: NextPage = () => {
 
       <Navbar />
       <Body>
-
         <Header />
 
-        <TextSectionContainer>
-          {SECTIONS.map((section, i) => <TextSection {...section} key={`section-${i}`}/>)}
-        </TextSectionContainer>
+        <div style={mainTableStyle}>
+          <MainTable
+            data={data}
+            handleChange={handleChange}
+            handleDeleteRow={handleDeleteRow}
+          />
+          <Button text="+ Új sor" onClick={newRow} />
+        </div>
 
+        <TextSectionContainer>
+          {SECTIONS.map((section, i) => (
+            <TextSection {...section} key={`section-${i}`} />
+          ))}
+        </TextSectionContainer>
       </Body>
 
-      
-
       {/* <main className={styles.main}>
-        <MainTable
-          data={data}
-          handleChange={handleChange}
-          handleToggleState={handleToggleState}
-          handleDeleteRow={handleDeleteRow}
-        />
-        <Button
-          appearance="default"
-          block
-          style={{ height: 24, width: 1400, padding: 2 }}
-          onClick={newRow}
-        >
-          + Új sor
-        </Button>
-
         <section className={styles.results}>
           <List>
             <List.Item>Minimálbér (202X): {MinimumIncome} HUF</List.Item>

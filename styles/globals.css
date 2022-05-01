@@ -31,3 +31,17 @@ input[type=number] {
   text-decoration: underline !important;
   background-color: #00EFD4 !important;
 }
+
+.rs-table-row {
+  border-bottom: 2px solid #121212 !important;
+}
+
+.rs-table-scrollbar {
+  opacity: 1 !important;
+}
+
+.rs-table-scrollbar-handle {
+  background-color: #FD3E63 !important;
+  border-radius: 6px !important;
+  width: 11px !important;
+}
