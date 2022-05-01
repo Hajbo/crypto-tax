@@ -1,0 +1,19 @@
+<svg width="210" height="210" viewBox="0 0 210 210" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g opacity="0.9">
+<rect x="160" y="10" width="10" height="10" rx="3" transform="rotate(-180 160 10)" fill="#FD3E63"/>
+<rect x="210" y="10" width="10" height="10" rx="3" transform="rotate(-180 210 10)" fill="#FD3E63"/>
+<rect x="160" y="60" width="10" height="10" rx="3" transform="rotate(-180 160 60)" fill="#FD3E63"/>
+<rect x="210" y="60" width="10" height="10" rx="3" transform="rotate(-180 210 60)" fill="#FD3E63"/>
+<rect x="160" y="110" width="10" height="10" rx="3" transform="rotate(-180 160 110)" fill="#FD3E63"/>
+<rect x="210" y="110" width="10" height="10" rx="3" transform="rotate(-180 210 110)" fill="#FD3E63"/>
+<rect x="160" y="160" width="10" height="10" rx="3" transform="rotate(-180 160 160)" fill="#FD3E63"/>
+<rect x="210" y="160" width="10" height="10" rx="3" transform="rotate(-180 210 160)" fill="#FD3E63"/>
+<rect x="210" y="210" width="10" height="10" rx="3" transform="rotate(-180 210 210)" fill="#FD3E63"/>
+<rect x="60.0002" y="9.99998" width="10" height="10" rx="3" transform="rotate(-180 60.0002 9.99998)" fill="#FD3E63"/>
+<rect x="60" y="60" width="10" height="10" rx="3" transform="rotate(-180 60 60)" fill="#FD3E63"/>
+<rect x="110" y="9.99998" width="10" height="10" rx="3" transform="rotate(-180 110 9.99998)" fill="#FD3E63"/>
+<rect x="110" y="60" width="10" height="10" rx="3" transform="rotate(-180 110 60)" fill="#FD3E63"/>
+<rect x="110" y="110" width="10" height="10" rx="3" transform="rotate(-180 110 110)" fill="#FD3E63"/>
+<rect x="10" y="9.99998" width="10" height="10" rx="3" transform="rotate(-180 10 9.99998)" fill="#FD3E63"/>
+</g>
+</svg>

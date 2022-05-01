@@ -2,8 +2,16 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
 import { Button, List } from "rsuite";
+import Body from "../components/Body";
+import Footer from "../components/Footer";
+import Header from "../components/Header";
 import MainTable, { DataRow, RATES } from "../components/MainTable";
+import Navbar from "../components/Navbar";
+import TextSection from "../components/TextSection";
+import TextSectionContainer from "../components/TextSectionContainer";
 import styles from "../styles/Home.module.css";
+
+import { SECTIONS } from "../utils/texts";
 
 const MinimumIncome = 167400;
 const MinimumIncome10pc = MinimumIncome * 0.1;
@@ -100,7 +108,20 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
+      <Navbar />
+      <Body>
+
+        <Header />
+
+        <TextSectionContainer>
+          {SECTIONS.map((section, i) => <TextSection {...section} key={`section-${i}`}/>)}
+        </TextSectionContainer>
+
+      </Body>
+
+      
+
+      {/* <main className={styles.main}>
         <MainTable
           data={data}
           handleChange={handleChange}
@@ -157,11 +178,9 @@ const Home: NextPage = () => {
 
           <span>SZJA bevallás 164. sor</span>
         </section>
-      </main>
+      </main> */}
 
-      <footer className={styles.footer}>
-        💸💸 Powered by Kriptobevallas.hu © {new Date().getFullYear()} 💸💸
-      </footer>
+      <Footer />
     </div>
   );
 };
