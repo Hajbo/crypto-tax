@@ -2,10 +2,11 @@ const greenDots = "/textSectionGreenDots.svg";
 const redDots = "/textSectionRedDots.svg";
 
 const TextSectionContainerStyle = {
-  padding: "30px 150px",
+  padding: "30px 0px",
 
   display: "flex",
   flexFlow: "column",
+  alignItems: "center",
   gap: "50px",
 
   backgroundImage: `url(${redDots}), url(${greenDots})`,
