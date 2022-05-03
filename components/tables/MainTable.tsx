@@ -230,7 +230,7 @@ const MainTable = (props: MainTableProps) => {
     minHeight: 350,
     autoHeight: data.length < 10,
     height: data.length < 10 ? undefined : 660,
-    width: 1150,
+    width: 1160,
   };
 
   const renderEmptyData = (
