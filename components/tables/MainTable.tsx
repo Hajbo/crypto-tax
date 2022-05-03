@@ -1,6 +1,23 @@
 import Image from "next/image";
-import { Button, DatePicker, InputPicker } from "rsuite";
+import { InputPicker } from "rsuite";
 import { Table, Cell, Column, HeaderCell } from "rsuite-table";
+import { DateInput, IDateFormatProps } from "@blueprintjs/datetime";
+import MomentLocaleUtils from "react-day-picker/moment";
+import moment from "moment";
+import "moment/locale/hu";
+import { separatedNumber } from "../../utils/formatting";
+import TableTooltip from "../TableTooltip";
+import {
+  currencyTooltip,
+  dateTooltip,
+  expenseTooltip,
+  incomeTooltip,
+  rateTooltip,
+  resultTooltip,
+  smallScaleTooltip,
+} from "../../utils/texts";
+
+const DATE_FORMAT = "YYYY-MM-DD";
 
 type AnyProps = any;
 
@@ -11,6 +28,16 @@ const baseCellStyle = {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
+
+  fontFamily: "Montserrat !important",
+  fontStyle: "normal !important",
+  fontWeight: 400,
+  fontSize: "12px !important",
+  lineHeight: "15px !important",
+
+  textTransform: "uppercase" as const,
+
+  color: "#121212 !important",
 };
 
 const customHeaderStyle = {
@@ -22,11 +49,15 @@ const customHeaderStyle = {
   fontSize: "12px",
   lineHeight: "15px",
 
-  textTransform: "uppercase",
+  textTransform: "uppercase" as const,
 
   color: "#121212",
 
-}
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "5px",
+};
 
 const CustomHeaderCell = (props: any) => {
   return (
@@ -34,7 +65,7 @@ const CustomHeaderCell = (props: any) => {
       {props.children}
     </HeaderCell>
   );
-}
+};
 
 export const EditCell = (props: AnyProps) => {
   const { rowData, dataKey, handleChange } = props;
@@ -59,38 +90,47 @@ export const IncomeExpenseCell = (props: AnyProps) => {
 
   return (
     <Cell {...props} style={baseCellStyle}>
-      {editing ? (
-        <input
-          type="number"
-          className="rs-input"
-          min="1"
-          defaultValue={rowData[dataKey]}
-          onChange={(event) => {
-            handleChange &
-              handleChange(rowData.id, dataKey, event.target.value);
-          }}
-        />
-      ) : (
-        <span className="table-content-edit-span">{rowData[dataKey]}</span>
-      )}
+      <input
+        type="number"
+        className={editing ? "rs-input" : "rs-input rs-input-disabled"}
+        min="1"
+        step="0.0000000000000001"
+        defaultValue={rowData[dataKey]}
+        onChange={(event) => {
+          handleChange(rowData.id, dataKey, event.target.value);
+        }}
+        disabled={!editing}
+      />
     </Cell>
   );
 };
 
+function getMomentFormatter(format: string): IDateFormatProps {
+  // note that locale argument comes from locale prop and may be undefined
+  return {
+    formatDate: (date: Date, locale: string) =>
+      moment(date).locale(locale).format(format),
+    parseDate: (str: string, locale: string) =>
+      moment(str, format).locale(locale).toDate(),
+    placeholder: "Dátum",
+  };
+}
+
+const dateCellRightElement = (
+  <Image src="/calendar.svg" width={12} height={12} alt="calendar" />
+);
 
 export const DateCell = (props: AnyProps) => {
   const { rowData, dataKey, handleChange } = props;
   return (
     <Cell {...props} style={baseCellStyle}>
-      <DatePicker
-        oneTap
-        cleanable={false}
-        ranges={[]} // Disable bottom row
-        placeholder="Dátum"
-        defaultValue={
-          rowData[dataKey] ? new Date(Date.parse(rowData[dataKey])) : null
-        }
-        onChange={(date) => {
+      <DateInput
+        locale="hu"
+        localeUtils={MomentLocaleUtils}
+        {...getMomentFormatter(DATE_FORMAT)}
+        closeOnSelection
+        reverseMonthAndYearMenus
+        onChange={(date: Date) => {
           handleChange &
             handleChange(
               rowData.id,
@@ -98,7 +138,11 @@ export const DateCell = (props: AnyProps) => {
               date?.toISOString().split("T")[0]
             );
         }}
-        style={{width: "200px"}}
+        value={rowData[dataKey] ? new Date(Date.parse(rowData[dataKey])) : null}
+        initialMonth={new Date(2021, 0, 1)}
+        minDate={new Date(2021, 0, 1)}
+        maxDate={new Date(2021, 11, 31)}
+        rightElement={dateCellRightElement}
       />
     </Cell>
   );
@@ -115,7 +159,7 @@ export const DropdownCell = (props: AnyProps) => {
         onChange={(value) => {
           handleChange(rowData.id, dataKey, value);
         }}
-        style={{width: "80px"}}
+        style={{ width: "80px" }}
         placeholder={<div></div>}
       />
     </Cell>
@@ -123,17 +167,17 @@ export const DropdownCell = (props: AnyProps) => {
 };
 
 const DeleteRowButtonCell = (props: AnyProps) => {
-  const { rowData, dataKey, handleClick } = props;
+  const { rowData, dataKey, handleDeleteRow } = props;
 
   return (
     <Cell {...props} style={baseCellStyle}>
       <button
         onClick={() => {
-          handleClick & handleClick(rowData.id);
+          handleDeleteRow(rowData.id);
         }}
         style={{ background: "transparent" }}
       >
-        <Image src="/x.svg" alt="delete button" width={20} height={20}/>
+        <Image src="/x.svg" alt="delete button" width={20} height={20} />
       </button>
     </Cell>
   );
@@ -149,6 +193,17 @@ const SmallScaleCell = (props: AnyProps) => {
   );
 };
 
+const ResultCell = (props: AnyProps) => {
+  const { rowData, dataKey } = props;
+
+  return (
+    <Cell {...props} style={baseCellStyle}>
+      {rowData[dataKey] == null
+        ? null
+        : `${separatedNumber(rowData[dataKey])} HUF`}
+    </Cell>
+  );
+};
 export interface DataRow {
   id?: number;
   date?: string;
@@ -164,7 +219,7 @@ export interface DataRow {
 type MainTableProps = {
   data: DataRow[];
   handleChange: (id: number, key: string, value: string) => void;
-  handleDeleteRow: (id: number) => void;
+  handleDeleteRow: (id?: number) => void;
 };
 
 const MainTable = (props: MainTableProps) => {
@@ -176,32 +231,47 @@ const MainTable = (props: MainTableProps) => {
     autoHeight: data.length < 10,
     height: data.length < 10 ? undefined : 660,
     width: 1150,
-  }
+  };
+
+  const renderEmptyData = (
+    <div style={{ width: "100%", textAlign: "center" }}>Hiánzyó adatok</div>
+  );
 
   return (
-    <Table {...tableProps} data={data}>
+    <Table {...tableProps} data={data} renderEmpty={() => renderEmptyData}>
       <Column width={40} align="center">
         <CustomHeaderCell>#</CustomHeaderCell>
-        <Cell dataKey="id" style={{...baseCellStyle, justifyContent: "flex-end"}}/>
+        <Cell
+          dataKey="id"
+          style={{ ...baseCellStyle, justifyContent: "flex-end" }}
+        />
       </Column>
 
       <Column width={150} align="center">
-        <CustomHeaderCell>Dátum</CustomHeaderCell>
+        <CustomHeaderCell>
+          Dátum <TableTooltip text={dateTooltip} />
+        </CustomHeaderCell>
         <DateCell dataKey="date" handleChange={handleChange} />
       </Column>
 
       <Column width={100} align="center">
-        <CustomHeaderCell>Bevétel</CustomHeaderCell>
+        <CustomHeaderCell>
+          Bevétel <TableTooltip text={incomeTooltip} />
+        </CustomHeaderCell>
         <IncomeExpenseCell dataKey="income" handleChange={handleChange} />
       </Column>
 
       <Column width={100} align="center">
-        <CustomHeaderCell>Kiadás</CustomHeaderCell>
+        <CustomHeaderCell>
+          Kiadás <TableTooltip text={expenseTooltip} />
+        </CustomHeaderCell>
         <IncomeExpenseCell dataKey="expense" handleChange={handleChange} />
       </Column>
 
       <Column width={150}>
-        <CustomHeaderCell align="center">Pénznem</CustomHeaderCell>
+        <CustomHeaderCell align="center">
+          Pénznem <TableTooltip text={currencyTooltip} />
+        </CustomHeaderCell>
         <DropdownCell
           dataKey="currency"
           handleChange={handleChange}
@@ -211,14 +281,18 @@ const MainTable = (props: MainTableProps) => {
         />
       </Column>
 
-      <Column width={100} align="center">
-        <CustomHeaderCell>Árfolyam</CustomHeaderCell>
-        <Cell dataKey="rate" style={baseCellStyle}/>
+      <Column width={110} align="center">
+        <CustomHeaderCell>
+          Árfolyam <TableTooltip text={rateTooltip} />
+        </CustomHeaderCell>
+        <Cell dataKey="rate" style={baseCellStyle} />
       </Column>
 
-      <Column width={100} align="center">
-        <CustomHeaderCell>Eredmény</CustomHeaderCell>
-        <Cell dataKey="result" style={baseCellStyle}/>
+      <Column width={110} align="center">
+        <CustomHeaderCell>
+          Eredmény <TableTooltip text={resultTooltip} />
+        </CustomHeaderCell>
+        <ResultCell dataKey="result" />
       </Column>
 
       <Column width={150} align="center">
@@ -226,14 +300,19 @@ const MainTable = (props: MainTableProps) => {
         <EditCell dataKey="comment" handleChange={handleChange} />
       </Column>
 
-      <Column flexGrow={1} align="center">
-        <CustomHeaderCell>Kisértékű ügylet</CustomHeaderCell>
+      <Column width={160} align="center">
+        <CustomHeaderCell>
+          Kisértékű ügylet <TableTooltip text={smallScaleTooltip} />
+        </CustomHeaderCell>
         <SmallScaleCell dataKey="smallScale" />
       </Column>
 
       <Column align="center">
         <CustomHeaderCell>Törlés</CustomHeaderCell>
-        <DeleteRowButtonCell dataKey="delete" handleClick={handleDeleteRow} />
+        <DeleteRowButtonCell
+          dataKey="delete"
+          handleDeleteRow={handleDeleteRow}
+        />
       </Column>
     </Table>
   );

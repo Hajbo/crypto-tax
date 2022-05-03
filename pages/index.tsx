@@ -12,19 +12,11 @@ import styles from "../styles/Home.module.css";
 
 import { SECTIONS } from "../utils/texts";
 import Button from "../components/Button";
+import ResultTables, { TaxResults } from "../components/tables/ResultTables";
 
 const MinimumIncome = 167400;
 const MinimumIncome10pc = MinimumIncome * 0.1;
 const TaxKey = 15;
-
-interface TaxResults {
-  currentYearLoss: number;
-  currentYearIncome: number;
-  currentYearSmallScaleIncome: number;
-  currentYearTaxableIncome: number;
-  currentYearTaxableLoss: number;
-  currentYearTax: number;
-}
 
 const mainTableStyle = {
   width: "85%",
@@ -37,13 +29,20 @@ const mainTableStyle = {
   marginBottom: "50px",
 };
 
-const defaultData: DataRow[] = [
-  {id:  1}, {id: 2}, {id: 3}, {id: 4},
-];
+const defaultData: DataRow[] = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }];
+
+const defaultTaxResults = {
+  currentYearLoss: 0,
+  currentYearIncome: 0,
+  currentYearSmallScaleIncome: 0,
+  currentYearTaxableIncome: 0,
+  currentYearTaxableLoss: 0,
+  currentYearTax: 0,
+};
 
 const Home: NextPage = () => {
   const [data, setData] = useState<DataRow[]>(defaultData);
-  const [taxResults, setTaxResults] = useState<TaxResults | null>(null);
+  const [taxResults, setTaxResults] = useState<TaxResults>(defaultTaxResults);
 
   const handleChange = (id: number, key: string, value: any) => {
     const nextData = [...data];
@@ -96,7 +95,8 @@ const Home: NextPage = () => {
     setData(nextData);
   };
 
-  const handleDeleteRow = (id: number) => {
+  const handleDeleteRow = (id?: number) => {
+    if (id == null) return;
     const nextData = data.filter((item) => item.id !== id);
     setData(nextData);
   };
@@ -127,56 +127,17 @@ const Home: NextPage = () => {
           <Button text="+ Új sor" onClick={newRow} />
         </div>
 
+        <ResultTables {...taxResults} />
+        <Button icon="/pdf.svg" text="PDF Exportálás" onClick={() => {}} />
+
+        <div style={{ margin: "30px" }} />
+
         <TextSectionContainer>
           {SECTIONS.map((section, i) => (
             <TextSection {...section} key={`section-${i}`} />
           ))}
         </TextSectionContainer>
       </Body>
-
-      {/* <main className={styles.main}>
-        <section className={styles.results}>
-          <List>
-            <List.Item>Minimálbér (202X): {MinimumIncome} HUF</List.Item>
-            <List.Item>
-              Minimálbér 10% (202X): {MinimumIncome10pc} HUF
-            </List.Item>
-            <List.Item>Adókulcs: {TaxKey}% </List.Item>
-          </List>
-
-          <List>
-            <List.Item>
-              <b>TOTAL tárgyév eredmény (HUF)</b>
-            </List.Item>
-            <List.Item>Veszteség: {taxResults?.currentYearLoss}</List.Item>
-            <List.Item>Jövedelem: {taxResults?.currentYearIncome}</List.Item>
-          </List>
-
-          <List>
-            <List.Item>
-              <b>TOTAL kisértékű bevételek (HUF)</b>
-            </List.Item>
-            <List.Item>
-              Jövedelem: {taxResults?.currentYearSmallScaleIncome}
-            </List.Item>
-          </List>
-
-          <List>
-            <List.Item>
-              <b>TOTAL tárgyév adózandó eredmény (HUF)</b>
-            </List.Item>
-            <List.Item>
-              Veszteség: {taxResults?.currentYearTaxableLoss}
-            </List.Item>
-            <List.Item>
-              Jövedelem: {taxResults?.currentYearTaxableIncome}
-            </List.Item>
-            <List.Item>Adó: {taxResults?.currentYearTax}</List.Item>
-          </List>
-
-          <span>SZJA bevallás 164. sor</span>
-        </section>
-      </main> */}
 
       <Footer />
     </div>

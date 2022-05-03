@@ -39,7 +39,6 @@ const TectSectionContentStyle = {
   fontWeight: 300,
   fontSize: "16px",
   lineHeight: "26px",
-
 };
 
 const TextSection = (props: TextSectionProps) => {

@@ -49,9 +49,7 @@ const Footer = () => {
 
       <div style={footerText}>© kriptobevallas.hu | 2022</div>
 
-      <div style={{...footerText, width: "799px"}}>
-        {FOOTER_TEXT}
-      </div>
+      <div style={{ ...footerText, width: "799px" }}>{FOOTER_TEXT}</div>
     </div>
   );
 };

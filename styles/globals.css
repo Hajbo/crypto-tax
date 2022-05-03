@@ -1,3 +1,8 @@
+@import "~normalize.css";
+@import "~@blueprintjs/core/lib/css/blueprint.css";
+@import "~@blueprintjs/icons/lib/css/blueprint-icons.css";
+@import "~@blueprintjs/datetime/lib/css/blueprint-datetime.css";
+@import "~@blueprintjs/popover2/lib/css/blueprint-popover2.css";
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 html,
@@ -32,6 +37,9 @@ input[type=number] {
   background-color: #00EFD4 !important;
 }
 
+
+
+/* Rsuitejs overrides, please don't judge */
 .rs-table-row {
   border-bottom: 2px solid #121212 !important;
 }
@@ -45,3 +53,141 @@ input[type=number] {
   border-radius: 6px !important;
   width: 11px !important;
 }
+
+.rs-input {
+  border: 2px solid #121212 !important;
+  box-sizing: border-box !important;
+  border-radius: 6px !important;
+
+  font-family: 'Montserrat' !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  font-size: 12px !important;
+  line-height: 15px !important;
+
+  text-transform: uppercase !important;
+
+  color: #121212 !important;
+}
+
+.rs-input-disabled {
+  border: 2px solid rgba(18, 18, 18, 0.1) !important;
+  box-sizing: border-box !important;
+  border-radius: 6px !important;
+}
+
+.rs-picker,
+.rs-picker-menu {
+  border: 2px solid #121212 !important;
+  box-sizing: border-box !important;
+  border-radius: 6px !important;
+}
+
+.rs-btn > svg {
+  color: #121212 !important;
+}
+
+.rs-picker-toggle-textbox,
+.rs-picker-toggle-value,
+.rs-picker-select-menu-item {
+  font-family: 'Montserrat' !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  font-size: 12px !important;
+
+  text-transform: uppercase !important;
+
+  color: #121212 !important;
+}
+
+.rs-picker-select-menu-item-active {
+  background: #00EFD4 !important;
+}
+
+.rs-picker-select-menu-items {
+  margin: 0;
+}
+
+
+
+/* Blueprintjs overrides, quick and dirty */
+span > svg {
+  color: #FD3E63;
+}
+
+.DayPicker-Day--selected{
+  background: #00EFD4 !important;
+  font-family: 'Montserrat' !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  font-size: 12px !important;
+  line-height: 15px !important;
+
+
+  color: #121212 !important;
+}
+
+.bp4-datepicker {
+  font-family: 'Montserrat';
+  font-style: normal !important;
+  font-weight: 400 !important;
+  font-size: 12px !important;
+  line-height: 15px !important;
+
+  color: #121212 !important;
+}
+
+.bp4-input-group {
+  border: 2px solid #121212;
+  box-sizing: border-box;
+  border-radius: 6px;
+}
+
+.bp4-input {
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+
+  text-transform: uppercase;
+
+  color: #121212;
+}
+
+.bp4-input-action {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  margin-right: 5px;
+}
+
+.bp4-popover2 {
+  z-index: 9999;
+}
+
+.bp4-popover2-arrow {
+  border: none;
+  box-shadow: none;
+}
+
+.bp4-popover2-arrow-border {
+  fill: #FFFFFF !important;
+  fill-opacity: 1 !important;
+  stroke-width: 5 !important;
+}
+
+.bp4-popover2-arrow-fill {
+  fill: #FFFFFF !important;
+  stroke-width: 5 !important;
+}
+
+.bp4-popover2-content {
+  color: #121212 !important;
+  background: #FFFFFF !important;
+  /* border: 2px solid #000000; */
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+
+

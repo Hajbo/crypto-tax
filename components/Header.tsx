@@ -76,9 +76,7 @@ const Header = () => {
           <br />
           .HU
         </span>
-        <span style={headerTextStyle}>
-         {HEADER_TEXT}
-        </span>
+        <span style={headerTextStyle}>{HEADER_TEXT}</span>
       </div>
       <Image src={headerImage} alt="Header Image" width={380} height={461} />
     </div>
