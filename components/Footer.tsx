@@ -29,7 +29,6 @@ const footerText = {
   fontWeight: 300,
   fontSize: "12px",
   lineHeight: "15px",
-  alignText: "center",
 };
 
 const boldFooterText = {

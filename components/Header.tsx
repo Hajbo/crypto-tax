@@ -65,18 +65,30 @@ const headerTextStyle = {
   textAlign: "right" as const,
 };
 
+const betaStyles = {
+  top: "-75px",
+  position: "relative" as const,
+
+  color: "black",
+  fontFamily: "Montserrat",
+  fontStyle: "normal",
+  fontWeight: 900,
+  fontSize: "12px",
+  lineHeight: "15px",
+}
+
 const Header = () => {
   return (
     <div style={headerStyle} id="crypto-tax-header">
       <div style={headerTextContainerStyle}>
-        <span style={headerBoldTextStyle}>
-          KRIPTO
+        <div style={headerBoldTextStyle}>
+          <span style={betaStyles}>BETA</span>KRIPTO
           <br />
           BEVALLAS
           <br />
-          .HU
-        </span>
-        <span style={headerTextStyle}>{HEADER_TEXT}</span>
+          <div style={{color: "black"}}>.HU</div>
+        </div>
+        <div style={headerTextStyle}>{HEADER_TEXT}</div>
       </div>
       <Image src={headerImage} alt="Header Image" width={380} height={461} />
     </div>
