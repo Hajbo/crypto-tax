@@ -16,13 +16,36 @@ import {
   resultTooltip,
   smallScaleTooltip,
 } from "../../utils/texts";
+import { RATES } from "../../utils/rates";
 
 const DATE_FORMAT = "YYYY-MM-DD";
 
 type AnyProps = any;
 
-const CURRENCIES = ["USD", "HUF", "EUR"];
-export const RATES = { USD: 350, HUF: 1, EUR: 400 };
+const CURRENCIES = Object.keys(RATES["2021-01-04"]);
+
+export const getRate = (dateString: string, currency: string) => {
+  if (currency === "HUF") return 1;
+
+  const dateUtils = getMomentFormatter(DATE_FORMAT);
+
+  if (Object.keys(RATES).includes(dateString)) {
+    const dailyRates = RATES[dateString as keyof typeof RATES];
+    return dailyRates[currency as keyof typeof dailyRates];
+  }
+
+  // If the date isn't in the list, then it's a holiday or weekend
+  // Step back one by one until the first weekday
+  var tmpDate = dateUtils.parseDate(dateString, "hu") as Date;
+  while (tmpDate) {
+    tmpDate = moment(tmpDate).subtract(1, "days").locale("hu").toDate();
+    const tmpDateString = dateUtils.formatDate(tmpDate, "hu");
+    if (Object.keys(RATES).includes(tmpDateString)) {
+      const dailyRates = RATES[tmpDateString as keyof typeof RATES];
+      return dailyRates[currency as keyof typeof dailyRates];
+    }
+  }
+};
 
 const baseCellStyle = {
   display: "flex",
@@ -122,24 +145,28 @@ const dateCellRightElement = (
 
 export const DateCell = (props: AnyProps) => {
   const { rowData, dataKey, handleChange } = props;
+  const dateFormatUtils = getMomentFormatter(DATE_FORMAT);
   return (
     <Cell {...props} style={baseCellStyle}>
       <DateInput
         locale="hu"
         localeUtils={MomentLocaleUtils}
-        {...getMomentFormatter(DATE_FORMAT)}
+        {...dateFormatUtils}
         closeOnSelection
         reverseMonthAndYearMenus
         onChange={(date: Date) => {
-          handleChange &
-            handleChange(
-              rowData.id,
-              dataKey,
-              date?.toISOString().split("T")[0]
-            );
+          handleChange(
+            rowData.id,
+            dataKey,
+            dateFormatUtils.formatDate(date, "hu")
+          );
         }}
         value={rowData[dataKey] ? new Date(Date.parse(rowData[dataKey])) : null}
-        initialMonth={new Date(2021, 0, 1)}
+        initialMonth={
+          rowData[dataKey]
+            ? new Date(Date.parse(rowData[dataKey]))
+            : new Date(2021, 0, 1)
+        }
         minDate={new Date(2021, 0, 1)}
         maxDate={new Date(2021, 11, 31)}
         rightElement={dateCellRightElement}
@@ -230,7 +257,7 @@ const MainTable = (props: MainTableProps) => {
     minHeight: 350,
     autoHeight: data.length < 10,
     height: data.length < 10 ? undefined : 660,
-    width: 1160,
+    width: 1170,
   };
 
   const renderEmptyData = (
