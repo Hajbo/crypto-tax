@@ -4,7 +4,7 @@ import { TEXT_COLOR } from "../utils/constants";
 const buttonStyle = {
   width: "fit-content",
   height: "35px",
-  padding: "5px",
+  padding: "5px 20px",
 
   background: "#00EFD4",
   border: "2px solid #121212",

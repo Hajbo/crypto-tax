@@ -16,6 +16,9 @@ const links = [
 ];
 
 const NavbarStyle = {
+  width: "100%",
+  minWidth: "1600px", // 1500 header + 100 padding
+
   color: TEXT_COLOR,
   backgroundColor: YELLOW,
   borderBottom: `3px solid ${TEXT_COLOR}`,

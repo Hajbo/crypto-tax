@@ -9,13 +9,17 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: Montserrat, "Open Sans", Helvetica, Arial, sans-serif;
+  font-family: Montserrat, "Open Sans", Helvetica, Arial, sans-serif !important;
 }
 
 * {
   box-sizing: border-box;
+  box-shadow: none !important;
 }
 
+::selection {
+  background: transparent !important;
+}
 
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -42,6 +46,12 @@ input[type=number] {
 /* Rsuitejs overrides, please don't judge */
 .rs-table-row {
   border-bottom: 2px solid #121212 !important;
+  /* height: 100px !important; */
+}
+
+.rs-table-row-header {
+  border-bottom: 3px solid #121212 !important;
+  border-radius: 6px 6px 0px 0px !important;
 }
 
 .rs-table-scrollbar {
@@ -108,6 +118,13 @@ input[type=number] {
   margin: 0;
 }
 
+.rs-picker-select-menu-item:hover {
+  background: #00EFD4 !important;
+}
+
+.rs-picker-picker-select-menu-scrollbar-handle {
+  background-color: #FD3E63 !important;
+}
 
 
 /* Blueprintjs overrides, quick and dirty */

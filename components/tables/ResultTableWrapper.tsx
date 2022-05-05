@@ -112,7 +112,7 @@ export const ResultTableValueWrapper = (props: any) => {
     <div style={getResultTableValueWrapperStyles(props.bigFont, props.width)}>
       <span>{props.header}</span>
       <hr style={hrStyle} />
-      <span>{`${separatedNumber(props.value)} HUF`}</span>
+      <span>{`${separatedNumber(props.value, 0)} HUF`}</span>
     </div>
   );
 };

@@ -8,6 +8,7 @@ const redDots = "/headerRedDots.svg";
 
 const headerStyle = {
   width: "100%",
+  minWidth: "1500px",
 
   backgroundImage: `url(${greenDots}), url(${redDots})`,
   backgroundPosition: "left bottom, right top",

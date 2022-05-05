@@ -79,7 +79,9 @@ const customHeaderStyle = {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
+  alignSelf: "center",
   gap: "5px",
+  
 };
 
 const CustomHeaderCell = (props: any) => {
@@ -111,6 +113,10 @@ export const IncomeExpenseCell = (props: AnyProps) => {
   if (dataKey === "income" && rowData.expense) editing = false;
   if (dataKey === "expense" && rowData.income) editing = false;
 
+  const onChange = (event: any) => {
+    handleChange(rowData.id, dataKey, event.target.value);
+  }
+
   return (
     <Cell {...props} style={baseCellStyle}>
       <input
@@ -119,10 +125,9 @@ export const IncomeExpenseCell = (props: AnyProps) => {
         min="1"
         step="0.0000000000000001"
         defaultValue={rowData[dataKey]}
-        onChange={(event) => {
-          handleChange(rowData.id, dataKey, event.target.value);
-        }}
+        onChange={onChange}
         disabled={!editing}
+        key={`key-${rowData.id}-${dataKey}-${editing}-${rowData.uuid}`}
       />
     </Cell>
   );
@@ -140,7 +145,7 @@ function getMomentFormatter(format: string): IDateFormatProps {
 }
 
 const dateCellRightElement = (
-  <Image src="/calendar.svg" width={12} height={12} alt="calendar" />
+  <Image src="/calendar.svg" width={12} height={12} alt="calendar"/>
 );
 
 export const DateCell = (props: AnyProps) => {
@@ -227,7 +232,7 @@ const ResultCell = (props: AnyProps) => {
     <Cell {...props} style={baseCellStyle}>
       {rowData[dataKey] == null
         ? null
-        : `${separatedNumber(rowData[dataKey])} HUF`}
+        : `${separatedNumber(rowData[dataKey], 4)} HUF`}
     </Cell>
   );
 };
@@ -241,16 +246,18 @@ export interface DataRow {
   result?: number;
   comment?: string;
   smallScale?: boolean;
+  uuid: string;
 }
 
 type MainTableProps = {
   data: DataRow[];
+  tableRef: any;
   handleChange: (id: number, key: string, value: string) => void;
   handleDeleteRow: (id?: number) => void;
 };
 
 const MainTable = (props: MainTableProps) => {
-  const { data, handleChange, handleDeleteRow } = props;
+  const { data, handleChange, handleDeleteRow, tableRef } = props;
 
   const tableProps = {
     rowHeight: 66,
@@ -264,8 +271,16 @@ const MainTable = (props: MainTableProps) => {
     <div style={{ width: "100%", textAlign: "center" }}>Hiánzyó adatok</div>
   );
 
+  const onDataUpdated = (p: any) => {
+    if (p === "bodyHeightChanged") {
+      console.log(p, data.length*100);
+      return {x: (data.length+1)*100};
+    }
+    return {}
+  }
+
   return (
-    <Table {...tableProps} data={data} renderEmpty={() => renderEmptyData}>
+    <Table {...tableProps} data={data} renderEmpty={() => renderEmptyData} ref={tableRef} shouldUpdateScroll={onDataUpdated} hover={false}>
       <Column width={40} align="center">
         <CustomHeaderCell>#</CustomHeaderCell>
         <Cell
