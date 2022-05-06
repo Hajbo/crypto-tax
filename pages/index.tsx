@@ -189,7 +189,7 @@ const Home: NextPage = () => {
             handleChange={handleChange}
             handleDeleteRow={handleDeleteRow}
           />
-          <Button text="+ Új sor" onClick={newRow} />
+          <Button text="+ Új sor" onClick={newRow} id="btn-new-row"/>
         </div>
 
         <ResultTables {...taxResults} />
@@ -199,6 +199,7 @@ const Home: NextPage = () => {
           onClick={() => {
             window.print();
           }}
+          id="btn-print"
         />
 
         <div style={{ margin: "30px" }} />

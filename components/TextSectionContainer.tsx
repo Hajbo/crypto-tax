@@ -16,7 +16,11 @@ const TextSectionContainerStyle = {
 };
 
 const TextSectionContainer = (props: any) => {
-  return <div style={TextSectionContainerStyle}>{props.children}</div>;
+  return (
+    <div style={TextSectionContainerStyle} id="text-section-container" className="not-printed">
+      {props.children}
+    </div>
+  );
 };
 
 export default TextSectionContainer;

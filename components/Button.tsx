@@ -32,12 +32,13 @@ type ButtonProps = {
   text: string;
   onClick: () => void;
   icon?: string;
+  id?: string;
 };
 
 const Button = (props: ButtonProps) => {
-  const { text, onClick, icon } = props;
+  const { text, onClick, icon, id } = props;
   return (
-    <button style={buttonStyle} onClick={onClick}>
+    <button style={buttonStyle} onClick={onClick} id={id} className="not-printed">
       {icon ? <Image src={icon} alt="pdf" width={12} height={12} /> : null}
       {text}
     </button>

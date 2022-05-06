@@ -109,7 +109,7 @@ const hrStyle = {
 };
 export const ResultTableValueWrapper = (props: any) => {
   return (
-    <div style={getResultTableValueWrapperStyles(props.bigFont, props.width)}>
+    <div style={getResultTableValueWrapperStyles(props.bigFont, props.width)} className="printed">
       <span>{props.header}</span>
       <hr style={hrStyle} />
       <span>{`${separatedNumber(props.value, 0)} HUF`}</span>

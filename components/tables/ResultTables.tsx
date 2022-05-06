@@ -43,7 +43,7 @@ const taxTableStyles = {
 
 const ResultTables = (props: TaxResults) => {
   return (
-    <div style={resultTableStyles}>
+    <div style={resultTableStyles} id="tax-result-tables">
       <div style={partialResultStyles}>
         <ResultTableWrapper header="TOTAL tárgyév eredmény (HUF)" width="450px">
           <ResultTableValueWrapper

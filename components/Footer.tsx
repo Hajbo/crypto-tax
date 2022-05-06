@@ -8,6 +8,7 @@ import { FOOTER_TEXT } from "../utils/texts";
 
 const footerStyle = {
   width: PAGE_WIDTH,
+  minWidth: "1500px",
   height: FOOTER_HEIGHT,
   backgroundColor: YELLOW,
 
@@ -43,7 +44,7 @@ const boldFooterText = {
 
 const Footer = () => {
   return (
-    <div style={footerStyle}>
+    <div className="not-printed" style={footerStyle} id="footer">
       <div style={boldFooterText}>KRIPTOBEVALLAS.HU</div>
 
       <div style={footerText}>© kriptobevallas.hu | 2022</div>

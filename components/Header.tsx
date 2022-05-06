@@ -80,7 +80,7 @@ const betaStyles = {
 
 const Header = () => {
   return (
-    <div style={headerStyle} id="crypto-tax-header">
+    <div style={headerStyle} id="crypto-tax-header" className="not-printed">
       <div style={headerTextContainerStyle}>
         <div style={headerBoldTextStyle}>
           <span style={betaStyles}>BETA</span>KRIPTO

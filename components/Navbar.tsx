@@ -65,7 +65,7 @@ const BoldNavbarLinkStyle = {
 
 const Navbar = () => {
   return (
-    <div style={NavbarStyle}>
+    <div style={NavbarStyle} id="navbar" className="not-printed">
       <div style={NavbarLeftContainerStyle}>
         <a style={BoldNavbarLinkStyle} href="#">
           KRIPTOBEVALLAS.HU
