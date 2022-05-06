@@ -107,7 +107,7 @@ const Home: NextPage = () => {
       sumResult - smallScaleResult > 0 ? sumResult - smallScaleResult : 0;
 
     const taxableLoss =
-      sumResult + smallScaleResult < 0 ? -1 * (sumResult + smallScaleResult) : 0;
+      -1*sumResult + smallScaleResult < 0 ? (-1 * sumResult) + smallScaleResult : 0;
 
     const newTaxResults = {
       currentYearLoss: currentYearLoss,
