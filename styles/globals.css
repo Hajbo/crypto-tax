@@ -212,46 +212,49 @@ span > svg {
 /* Printing */
 
 @media only print {
-  .print-body {
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-  
-  .rs-table {
-    position: absolute !important;
-    display: block !important;
-    height: auto !important;
-    overflow: visible !important;
-    top: 500px !important;
-  }
-  
-  .rs-table-body-row-wrapper {
-    position: relative !important;
-    display: block !important;
-    height: auto !important;
-    overflow: visible !important;
-  }
-  
-  
-  .printed {
-    position: absolute !important;
-    display: block !important;
-    top: 0px !important;
-  }
-  
-  #footer,
-  #navbar, 
-  #header,
-  #text-section-container
-  #btn-new-row,
-  #btn-print,
-  .rs-table-scrollbar,
-  .rs-table-scrollbar-handle {
-    display: none !important;
-  }
-  
-  .not-printed {
-    display: none !important;
-  }
 
+.print-top-margin {
+  margin-top: 20px !important;
+}
+
+.print-body {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.rs-table {
+  position: absolute !important;
+  display: block !important;
+  height: auto !important;
+  overflow: visible !important;
+  top: 500px !important;
+}
+
+.rs-table-body-row-wrapper {
+  position: relative !important;
+  display: block !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+
+.printed {
+  position: absolute !important;
+  display: block !important;
+  top: 0px !important;
+}
+
+#footer,
+#navbar, 
+#header,
+#text-section-container
+#btn-new-row,
+#btn-print,
+.rs-table-scrollbar,
+.rs-table-scrollbar-handle {
+  display: none !important;
+}
+
+.not-printed {
+  display: none !important;
+}
 };

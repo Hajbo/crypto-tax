@@ -58,11 +58,12 @@ const bottomTextWrapperStyle = {
 };
 
 export const ResultTableWrapper = (props: any) => {
-  const { customChildrenCss = {}, bottomText, width, header } = props;
+  const { customChildrenCss = {}, bottomText, width, header, customClassName } = props;
 
   return (
     <div
       style={{ ...getResultTableWrapperStyles(width), ...customChildrenCss }}
+      className={customClassName}
     >
       <div style={resultTableWrapperHeaderStyles}>{header}</div>
       <div style={resultTableWrapperChildrenStyles}>{props.children}</div>
@@ -109,7 +110,7 @@ const hrStyle = {
 };
 export const ResultTableValueWrapper = (props: any) => {
   return (
-    <div style={getResultTableValueWrapperStyles(props.bigFont, props.width)} className="printed">
+    <div style={getResultTableValueWrapperStyles(props.bigFont, props.width)}>
       <span>{props.header}</span>
       <hr style={hrStyle} />
       <span>{`${separatedNumber(props.value, 0)} HUF`}</span>

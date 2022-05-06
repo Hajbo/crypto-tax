@@ -43,9 +43,13 @@ const taxTableStyles = {
 
 const ResultTables = (props: TaxResults) => {
   return (
-    <div style={resultTableStyles} id="tax-result-tables">
+    <div style={resultTableStyles} id="tax-result-tables" className="printed">
       <div style={partialResultStyles}>
-        <ResultTableWrapper header="TOTAL tárgyév eredmény (HUF)" width="450px">
+        <ResultTableWrapper
+          header="TOTAL tárgyév eredmény (HUF)"
+          width="450px"
+          customClassName="print-top-margin"
+        >
           <ResultTableValueWrapper
             header="Veszteség"
             value={props.currentYearLoss}
@@ -61,6 +65,7 @@ const ResultTables = (props: TaxResults) => {
         <ResultTableWrapper
           header="TOTAL kisértékű bevételek (HUF)"
           width="330px"
+          customClassName="print-top-margin"
         >
           <ResultTableValueWrapper
             header="Jövedelem"
@@ -74,6 +79,7 @@ const ResultTables = (props: TaxResults) => {
         width="800px"
         bottomText="SZJA bevallás 164. sor"
         customChildrenCss={taxTableStyles}
+        customClassName="print-top-margin"
       >
         <ResultTableValueWrapper
           header="2021 évi Veszteség"

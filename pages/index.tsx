@@ -197,7 +197,11 @@ const Home: NextPage = () => {
           icon="/pdf.svg"
           text="PDF Exportálás"
           onClick={() => {
-            window.print();
+            if (tableRef && tableRef.current && data.length !== previousDataLength) {
+              // @ts-ignore
+              tableRef.current.scrollTop(0);
+              window.print();
+            }
           }}
           id="btn-print"
         />
