@@ -59,7 +59,6 @@ const Home: NextPage = () => {
 
   useEffect( () => {
     if (tableRef && tableRef.current && data.length !== previousDataLength) {
-      console.log("scroll", data.length *  100)
       // @ts-ignore
       tableRef.current.scrollTop((data.length+1) *  100);
     }

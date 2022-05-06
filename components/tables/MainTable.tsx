@@ -273,7 +273,6 @@ const MainTable = (props: MainTableProps) => {
 
   const onDataUpdated = (p: any) => {
     if (p === "bodyHeightChanged") {
-      console.log(p, data.length*100);
       return {x: (data.length+1)*100};
     }
     return {}
