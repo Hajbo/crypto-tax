@@ -14,6 +14,7 @@ import { SECTIONS } from "../utils/texts";
 import Button from "../components/Button";
 import ResultTables, { TaxResults } from "../components/tables/ResultTables";
 import { generateUUID } from "../utils/formatting";
+import Script from "next/script";
 
 const MinimumIncome = 167400;
 const MinimumIncome10pc = MinimumIncome * 0.1;
@@ -30,7 +31,12 @@ const mainTableStyle = {
   marginBottom: "50px",
 };
 
-const defaultData: DataRow[] = [{ id: 1, uuid: generateUUID() }, { id: 2, uuid: generateUUID() }, { id: 3, uuid: generateUUID() }, { id: 4, uuid: generateUUID() }];
+const defaultData: DataRow[] = [
+  { id: 1, uuid: generateUUID() },
+  { id: 2, uuid: generateUUID() },
+  { id: 3, uuid: generateUUID() },
+  { id: 4, uuid: generateUUID() },
+];
 
 const defaultTaxResults = {
   currentYearLoss: 0,
@@ -57,10 +63,10 @@ const Home: NextPage = () => {
   const [taxResults, setTaxResults] = useState<TaxResults>(defaultTaxResults);
   const tableRef = useRef();
 
-  useEffect( () => {
+  useEffect(() => {
     if (tableRef && tableRef.current && data.length !== previousDataLength) {
       // @ts-ignore
-      tableRef.current.scrollTop((data.length+1) *  100);
+      tableRef.current.scrollTop((data.length + 1) * 100);
     }
   }, [data]);
 
@@ -106,7 +112,7 @@ const Home: NextPage = () => {
       sumResult - smallScaleResult > 0 ? sumResult - smallScaleResult : 0;
 
     const taxableLoss =
-      sumResult + smallScaleResult < 0 ? -1 * (sumResult) + smallScaleResult : 0;
+      sumResult + smallScaleResult < 0 ? -1 * sumResult + smallScaleResult : 0;
 
     const newTaxResults = {
       currentYearLoss: currentYearLoss,
@@ -178,6 +184,21 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      {/* <!-- Global site tag (gtag.js) - Google Analytics --> */}
+      <Script
+        strategy="afterInteractive"
+        src="https://www.googletagmanager.com/gtag/js?id=G-1BRWFQXE0E"
+      ></Script>
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'G-1BRWFQXE0E');
+`}
+      </Script>
+
       <Navbar />
       <Body>
         <Header />
@@ -189,7 +210,7 @@ const Home: NextPage = () => {
             handleChange={handleChange}
             handleDeleteRow={handleDeleteRow}
           />
-          <Button text="+ Új sor" onClick={newRow} id="btn-new-row"/>
+          <Button text="+ Új sor" onClick={newRow} id="btn-new-row" />
         </div>
 
         <ResultTables {...taxResults} />
@@ -197,7 +218,11 @@ const Home: NextPage = () => {
           icon="/pdf.svg"
           text="PDF Exportálás"
           onClick={() => {
-            if (tableRef && tableRef.current && data.length !== previousDataLength) {
+            if (
+              tableRef &&
+              tableRef.current &&
+              data.length !== previousDataLength
+            ) {
               // @ts-ignore
               tableRef.current.scrollTop(0);
               window.print();
