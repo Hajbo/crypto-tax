@@ -187,7 +187,7 @@ const Home: NextPage = () => {
       {/* <!-- Global site tag (gtag.js) - Google Analytics --> */}
       <Script
         strategy="afterInteractive"
-        src="https://www.googletagmanager.com/gtag/js?id=G-1BRWFQXE0E"
+        src="https://www.googletagmanager.com/gtag/js?id=G-KP995JTRVG"
       ></Script>
       <Script id="google-analytics" strategy="afterInteractive">
         {`
@@ -195,7 +195,7 @@ window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 
-gtag('config', 'G-1BRWFQXE0E');
+gtag('config', 'G-KP995JTRVG');
 `}
       </Script>
 
