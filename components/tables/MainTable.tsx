@@ -81,7 +81,6 @@ const customHeaderStyle = {
   alignItems: "center",
   alignSelf: "center",
   gap: "5px",
-  
 };
 
 const CustomHeaderCell = (props: any) => {
@@ -93,9 +92,9 @@ const CustomHeaderCell = (props: any) => {
 };
 
 export const EditCell = (props: AnyProps) => {
-  const { rowData, dataKey, handleChange } = props;
+  const { rowData, dataKey, handleChange, ...rest } = props;
   return (
-    <Cell {...props} style={baseCellStyle}>
+    <Cell {...rest} style={baseCellStyle}>
       <input
         className="rs-input"
         defaultValue={rowData[dataKey]}
@@ -108,17 +107,17 @@ export const EditCell = (props: AnyProps) => {
 };
 
 export const IncomeExpenseCell = (props: AnyProps) => {
-  const { rowData, dataKey, handleChange } = props;
+  const { rowData, dataKey, handleChange, ...rest } = props;
   let editing = true;
   if (dataKey === "income" && rowData.expense) editing = false;
   if (dataKey === "expense" && rowData.income) editing = false;
 
   const onChange = (event: any) => {
     handleChange(rowData.id, dataKey, event.target.value);
-  }
+  };
 
   return (
-    <Cell {...props} style={baseCellStyle}>
+    <Cell {...rest} style={baseCellStyle}>
       <input
         type="number"
         className={editing ? "rs-input" : "rs-input rs-input-disabled"}
@@ -145,14 +144,14 @@ function getMomentFormatter(format: string): IDateFormatProps {
 }
 
 const dateCellRightElement = (
-  <Image src="/calendar.svg" width={12} height={12} alt="calendar"/>
+  <Image src="/calendar.svg" width={12} height={12} alt="calendar" />
 );
 
 export const DateCell = (props: AnyProps) => {
-  const { rowData, dataKey, handleChange } = props;
+  const { rowData, dataKey, handleChange, ...rest } = props;
   const dateFormatUtils = getMomentFormatter(DATE_FORMAT);
   return (
-    <Cell {...props} style={baseCellStyle}>
+    <Cell {...rest} style={baseCellStyle}>
       <DateInput
         locale="hu"
         localeUtils={MomentLocaleUtils}
@@ -181,11 +180,13 @@ export const DateCell = (props: AnyProps) => {
 };
 
 export const DropdownCell = (props: AnyProps) => {
-  const { rowData, dataKey, handleChange, options } = props;
+  const { rowData, dataKey, handleChange, options, ...rest } = props;
+  console.log(rowData);
   return (
-    <Cell {...props} style={baseCellStyle}>
+    <Cell {...rest} style={baseCellStyle}>
       <InputPicker
         data={options}
+        value={rowData[dataKey] != null ? rowData[dataKey] : undefined}
         cleanable={false}
         creatable={false}
         onChange={(value) => {
@@ -193,16 +194,17 @@ export const DropdownCell = (props: AnyProps) => {
         }}
         style={{ width: "80px" }}
         placeholder={<div></div>}
+        key={`key-${rowData.id}-${dataKey}-${rowData.uuid}`}
       />
     </Cell>
   );
 };
 
 const DeleteRowButtonCell = (props: AnyProps) => {
-  const { rowData, dataKey, handleDeleteRow } = props;
+  const { rowData, dataKey, handleDeleteRow, ...rest } = props;
 
   return (
-    <Cell {...props} style={baseCellStyle}>
+    <Cell {...rest} style={baseCellStyle}>
       <button
         onClick={() => {
           handleDeleteRow(rowData.id);
@@ -216,20 +218,20 @@ const DeleteRowButtonCell = (props: AnyProps) => {
 };
 
 const SmallScaleCell = (props: AnyProps) => {
-  const { rowData, dataKey } = props;
+  const { rowData, dataKey, ...rest } = props;
 
   return (
-    <Cell {...props} style={baseCellStyle}>
+    <Cell {...rest} style={baseCellStyle}>
       {rowData[dataKey] == null ? null : rowData[dataKey] ? "IGEN" : "NEM"}
     </Cell>
   );
 };
 
 const ResultCell = (props: AnyProps) => {
-  const { rowData, dataKey } = props;
+  const { rowData, dataKey, ...rest } = props;
 
   return (
-    <Cell {...props} style={baseCellStyle}>
+    <Cell {...rest} style={baseCellStyle}>
       {rowData[dataKey] == null
         ? null
         : `${separatedNumber(rowData[dataKey], 4)} HUF`}
@@ -273,13 +275,20 @@ const MainTable = (props: MainTableProps) => {
 
   const onDataUpdated = (p: any) => {
     if (p === "bodyHeightChanged") {
-      return {x: (data.length+1)*100};
+      return { x: (data.length + 1) * 100 };
     }
-    return {}
-  }
+    return {};
+  };
 
   return (
-    <Table {...tableProps} data={data} renderEmpty={() => renderEmptyData} ref={tableRef} shouldUpdateScroll={onDataUpdated} hover={false}>
+    <Table
+      {...tableProps}
+      data={data}
+      renderEmpty={() => renderEmptyData}
+      ref={tableRef}
+      shouldUpdateScroll={onDataUpdated}
+      hover={false}
+    >
       <Column width={40} align="center">
         <CustomHeaderCell>#</CustomHeaderCell>
         <Cell
